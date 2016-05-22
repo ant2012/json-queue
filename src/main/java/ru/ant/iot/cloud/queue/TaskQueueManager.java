@@ -1,6 +1,6 @@
 package ru.ant.iot.cloud.queue;
 
-import ru.ant.iot.cloud.WebPropertiesManager;
+import ru.ant.common.properties.PropertiesManager;
 
 import javax.json.JsonObject;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -11,7 +11,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class TaskQueueManager {
     private final ArrayBlockingQueue<JsonObject> queue;
 
-    public TaskQueueManager(WebPropertiesManager webPropertiesManager) {
+    public TaskQueueManager(PropertiesManager webPropertiesManager) {
         int queueMaxSize = Integer.parseInt(webPropertiesManager.getProperty("TaskQueueManager.queue.maxSize"));
         queue = new ArrayBlockingQueue<>(queueMaxSize, true);
 

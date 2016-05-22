@@ -1,7 +1,8 @@
 package ru.ant.iot.cloud.queue;
 
 import org.apache.log4j.Logger;
-import ru.ant.iot.cloud.WebPropertiesManager;
+import ru.ant.common.properties.PropertiesManager;
+import ru.ant.common.properties.WebPropertiesManager;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -26,9 +27,9 @@ public class TaskQueueServlet extends javax.servlet.http.HttpServlet {
     public void init() throws ServletException {
         super.init();
 
-        WebPropertiesManager webPropertiesManager = new WebPropertiesManager(getServletContext());
-        secretKey = webPropertiesManager.getProperty("secret.key");
-        taskQueueManager = new TaskQueueManager(webPropertiesManager);
+        PropertiesManager propertiesManager = new WebPropertiesManager(getServletContext());
+        secretKey = propertiesManager.getProperty("secret.key");
+        taskQueueManager = new TaskQueueManager(propertiesManager);
     }
 
     @Override
