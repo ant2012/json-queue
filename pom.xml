@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>ru.ant.commons</groupId>
-            <artifactId>ant-commons</artifactId>
+            <artifactId>property-utils</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
