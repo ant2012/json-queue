@@ -9,6 +9,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.stream.JsonParsingException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.io.IOException;
 /**
  * Created by Ant on 16.05.2016.
  */
-@javax.servlet.annotation.WebServlet(name = "TaskQueueServlet", urlPatterns = {"/task-queue"})
+@WebServlet(name = "TaskQueueServlet", urlPatterns = {"/task-queue"})
 public class TaskQueueServlet extends javax.servlet.http.HttpServlet {
 
     private Logger log = Logger.getLogger(getClass());
@@ -29,7 +30,8 @@ public class TaskQueueServlet extends javax.servlet.http.HttpServlet {
 
         PropertiesManager propertiesManager = new WebPropertiesManager(getServletContext());
         secretKey = propertiesManager.getProperty("secret.key");
-        taskQueueManager = new TaskQueueManager(propertiesManager);
+        taskQueueManager = TaskQueueManager.getInstance();
+        taskQueueManager.setPropertyManager(propertiesManager);
     }
 
     @Override
