@@ -26,10 +26,14 @@ public class SlackBot extends HttpServlet {
     public void init() throws ServletException {
         super.init();
 
-        PropertiesManager propertiesManager = new WebPropertiesManager(getServletContext());
-        TOKEN = propertiesManager.getProperty("SlackBot.key");
         taskQueueManager = TaskQueueManager.getInstance();
-        taskQueueManager.setPropertyManager(propertiesManager);
+        PropertiesManager propertiesManager = taskQueueManager.getPropertyManager();
+        if(propertiesManager == null){
+            propertiesManager = new WebPropertiesManager(getServletContext());
+            taskQueueManager.setPropertyManager(propertiesManager);
+        }
+
+        TOKEN = propertiesManager.getProperty("SlackBot.key");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

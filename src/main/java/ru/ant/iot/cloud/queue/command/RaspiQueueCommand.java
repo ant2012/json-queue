@@ -31,6 +31,12 @@ public class RaspiQueueCommand {
                 json.add("mac", words[1]);
                 if(words.length>2) json.add("ip", words[2]);
                 break;
+            case "stream":
+                if(words.length>1)
+                    json.add("resolution", words[1]);
+                if(words.length>2)
+                    json.add("framerate", words[2]);
+                break;
             default: throw new NotImplementedException("Class " + commandClass + " not supported");
         }
         return json.build();

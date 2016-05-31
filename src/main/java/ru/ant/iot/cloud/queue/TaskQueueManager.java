@@ -10,6 +10,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  */
 public class TaskQueueManager {
     private static TaskQueueManager ourInstance = new TaskQueueManager();
+    private PropertiesManager propertyManager;
 
     public static TaskQueueManager getInstance() {
         return ourInstance;
@@ -28,8 +29,13 @@ public class TaskQueueManager {
         return queue.poll();
     }
 
-    public void setPropertyManager(PropertiesManager propertiesManager) {
-        int queueMaxSize = Integer.parseInt(propertiesManager.getProperty("TaskQueueManager.queue.maxSize"));
+    public void setPropertyManager(PropertiesManager propertyManager) {
+        this.propertyManager = propertyManager;
+        int queueMaxSize = Integer.parseInt(propertyManager.getProperty("TaskQueueManager.queue.maxSize"));
         queue = new ArrayBlockingQueue<>(queueMaxSize, true);
+    }
+
+    public PropertiesManager getPropertyManager() {
+        return propertyManager;
     }
 }

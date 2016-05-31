@@ -28,10 +28,14 @@ public class TaskQueueServlet extends javax.servlet.http.HttpServlet {
     public void init() throws ServletException {
         super.init();
 
-        PropertiesManager propertiesManager = new WebPropertiesManager(getServletContext());
-        secretKey = propertiesManager.getProperty("secret.key");
         taskQueueManager = TaskQueueManager.getInstance();
-        taskQueueManager.setPropertyManager(propertiesManager);
+        PropertiesManager propertiesManager = taskQueueManager.getPropertyManager();
+        if(propertiesManager == null){
+            propertiesManager = new WebPropertiesManager(getServletContext());
+            taskQueueManager.setPropertyManager(propertiesManager);
+        }
+
+        secretKey = propertiesManager.getProperty("secret.key");
     }
 
     @Override
