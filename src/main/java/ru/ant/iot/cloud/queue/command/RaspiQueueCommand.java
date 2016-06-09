@@ -13,13 +13,22 @@ public class RaspiQueueCommand {
     private final String triggerWord;
     private final String text;
     private String commandClass;
+    private final String helpText = "Raspi bot help\n"
+            + "Type: \"raspi: <command>\"\n"
+            + "Commands:\n"
+            + "reboot - Reboots device\n"
+            + "wol <mac> [ip] - Sends magic packet\n"
+            + "snap - makes photo for this chat via flickr\n"
+            + "stream [resolution [framerate]] - starts mjpg-streamer\n"
+            + "help - shows this help"
+            ;
 
     public RaspiQueueCommand(String triggerWord, String text) {
         this.triggerWord = triggerWord;
         this.text = text;
     }
 
-    public JsonObject parse() {
+    public JsonObject parse() throws Exception {
         String[] words = text.substring(triggerWord.length()).trim().split(" ");
         JsonObjectBuilder json = Json.createObjectBuilder();
         commandClass = words[0];
@@ -37,7 +46,9 @@ public class RaspiQueueCommand {
                 if(words.length>2)
                     json.add("framerate", words[2]);
                 break;
-            default: throw new NotImplementedException("Class " + commandClass + " not supported");
+            case "help" :
+            default:
+                throw new Exception(helpText);
         }
         return json.build();
     }
